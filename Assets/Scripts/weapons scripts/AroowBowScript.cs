@@ -10,7 +10,7 @@ public class AroowBowScript : MonoBehaviour
 
     public float deactivate_timer = 3f;
 
-    public float damage = 15f;
+    public float damage = 50f;
 
     private void Awake()
     {
@@ -40,7 +40,11 @@ public class AroowBowScript : MonoBehaviour
     {
         //after we touch an enemy deactivate game object
 
-
+        if(target.tag ==Tags.ENEMY_TAG)
+        {
+            target.GetComponent<healthScript>().ApplyDamage(damage);
+        }
+        gameObject.SetActive(false);
     }
 
 }

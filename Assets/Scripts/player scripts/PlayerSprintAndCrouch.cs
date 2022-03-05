@@ -25,11 +25,15 @@ public class PlayerSprintAndCrouch : MonoBehaviour
     private float walk_step_dist = 0.4f;
     private float sprint_step_dist=0.25f;
     private float crouch_step_dist = 0.5f;
+    private playerStats player_stats;
+
+    private float sprint_value = 100f;
+    public float sprint_threshold = 10f;
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         look_root = transform.GetChild(0);
-
+        player_stats = GetComponent<playerStats>();
         player_Footsteps = GetComponentInChildren<playerfootsteps>();
     }
 
@@ -50,22 +54,52 @@ public class PlayerSprintAndCrouch : MonoBehaviour
 
     void sprint()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift)&& !is_crouch)
+        if (sprint_value > 0f)
         {
-            playerMovement.speed = sprint_speed;
-            
-            player_Footsteps.step_dist = sprint_step_dist;
-            player_Footsteps.vol_min = sprint_volume;
-            player_Footsteps.vol_max = sprint_volume;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !is_crouch)
+            {
+                playerMovement.speed = sprint_speed;
 
+                player_Footsteps.step_dist = sprint_step_dist;
+                player_Footsteps.vol_min = sprint_volume;
+                player_Footsteps.vol_max = sprint_volume;
+
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !is_crouch)
+            {
+                playerMovement.speed = move_speed;
+
+                player_Footsteps.vol_min = walk_vol_min;
+                player_Footsteps.vol_max = walk_vol_max;
+                player_Footsteps.step_dist = walk_step_dist;
+            }
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift) && !is_crouch)
+        if(Input.GetKey(KeyCode.LeftShift)&& !is_crouch && (Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.D)))
         {
-            playerMovement.speed = move_speed;
+            sprint_value -= sprint_threshold * Time.deltaTime;
 
-            player_Footsteps.vol_min = walk_vol_min;
-            player_Footsteps.vol_max = walk_vol_max;
-            player_Footsteps.step_dist = walk_step_dist;
+            if(sprint_value<=0f)
+            {
+                sprint_value = 0f;
+                playerMovement.speed = move_speed;
+                player_Footsteps.vol_min = walk_vol_min;
+                player_Footsteps.vol_max = walk_vol_max;
+                player_Footsteps.step_dist = walk_step_dist;
+            }
+            player_stats.Display_staminaStats(sprint_value);
+        }
+
+        else
+        {
+            if (sprint_value != 100)
+            {
+                sprint_value += (sprint_threshold / 2f) * Time.deltaTime;
+                player_stats.Display_staminaStats(sprint_value);
+                if(sprint_value>100f)
+                {
+                    sprint_value = 100f;
+                }
+            }
         }
     }
 

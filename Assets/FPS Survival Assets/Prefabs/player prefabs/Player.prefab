@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 360414076224333998}
   - component: {fileID: 360414076224333992}
   - component: {fileID: 7966627640343534572}
+  - component: {fileID: 1541393401534903288}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -504,6 +505,7 @@ MonoBehaviour:
   sprint_speed: 10
   move_speed: 5
   crouch_speed: 2
+  sprint_threshold: 10
 --- !u!114 &360414076224333998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 15
-  damage: 50
+  damage: 25
   arrow_prefab: {fileID: 5422413954801787840, guid: 594e1504a2945eb4b93d8f89c6ad11d7, type: 3}
   spear_prefab: {fileID: 784463905550004412, guid: 79c9529dc5967a04485fcd058e13750a, type: 3}
   arrow_bow_startposition: {fileID: 64766230394156275}
@@ -556,6 +558,20 @@ MonoBehaviour:
   is_player: 1
   is_boar: 0
   is_cannibal: 0
+--- !u!114 &1541393401534903288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360414075807716958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5bfc9e0a9695b44692b76a6918d4873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health_stats: {fileID: 0}
+  stamina_stats: {fileID: 0}
 --- !u!82 &15628854
 AudioSource:
   m_ObjectHideFlags: 0
